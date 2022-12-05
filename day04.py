@@ -1,4 +1,4 @@
-from inputReader import read_file
+from inputReader import read_file_with_strip
 
 
 def make_ranges(line):
@@ -15,7 +15,7 @@ def range_contains_range(first_range, second_range):
 
 
 def solve_pt_1(input_path):
-    input_lines = read_file(input_path)
+    input_lines = read_file_with_strip(input_path)
     contained_pairs = 0
     for single_line in input_lines:
         range1, range2 = make_ranges(single_line)
@@ -25,7 +25,7 @@ def solve_pt_1(input_path):
 
 
 def solve_pt_2(input_path):
-    input_lines = read_file(input_path)
+    input_lines = read_file_with_strip(input_path)
     contained_pairs = 0
     for single_line in input_lines:
         range1, range2 = make_ranges(single_line)

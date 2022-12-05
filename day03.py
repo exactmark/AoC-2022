@@ -1,6 +1,6 @@
 from math import floor
 
-from inputReader import read_file
+from inputReader import read_file_with_strip
 
 
 def make_set(cpt):
@@ -26,7 +26,7 @@ def get_priority(letter):
 
 
 def solve_pt_1(input_path):
-    input_lines = read_file(input_path)
+    input_lines = read_file_with_strip(input_path)
     print(sum([get_priority(get_common_letter(x)) for x in input_lines]))
 
 
@@ -39,7 +39,7 @@ def get_common_letter_of_three(lines, index):
 
 
 def solve_pt_2(input_path):
-    input_lines = read_file(input_path)
+    input_lines = read_file_with_strip(input_path)
     score = 0
     for x in range(0, len(input_lines), 3):
         score += get_priority(get_common_letter_of_three(input_lines, x))

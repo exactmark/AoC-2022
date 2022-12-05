@@ -1,14 +1,16 @@
-from inputReader import read_file
+from inputReader import read_file_with_strip
+
 
 class Elf:
     def __init__(self):
         self.bag = []
 
-    def add_to_bag(self,item:int):
+    def add_to_bag(self, item: int):
         self.bag.append(item)
 
     def get_bag_weight(self):
         return sum(self.bag)
+
 
 def get_elf_list(input_lines):
     elf_list = []
@@ -22,8 +24,9 @@ def get_elf_list(input_lines):
     elf_list.append(this_elf)
     return elf_list
 
+
 def solve_pt_1(input_path):
-    input_lines = read_file(input_path)
+    input_lines = read_file_with_strip(input_path)
     elf_list = get_elf_list(input_lines)
     max_bag = 0
     for e in elf_list:
@@ -31,10 +34,11 @@ def solve_pt_1(input_path):
             max_bag = e.get_bag_weight()
     print(max_bag)
 
+
 def solve_pt_2(input_path):
-    input_lines = read_file(input_path)
+    input_lines = read_file_with_strip(input_path)
     elf_list = get_elf_list(input_lines)
-    elf_list.sort(key=lambda x:x.get_bag_weight(),reverse=True)
+    elf_list.sort(key=lambda x: x.get_bag_weight(), reverse=True)
     for x in elf_list:
         print(x.get_bag_weight())
     print(sum([x.get_bag_weight() for x in elf_list[:3]]))

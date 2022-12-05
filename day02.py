@@ -1,4 +1,4 @@
-from inputReader import read_file
+from inputReader import read_file_with_strip
 
 
 def get_pt1_rd_score(line):
@@ -43,12 +43,12 @@ def get_pt2_rd_score(line):
     return score+my_move
 
 def solve_pt_1(input_path):
-    input_lines = read_file(input_path)
+    input_lines = read_file_with_strip(input_path)
     print(sum([get_pt1_rd_score(x) for x in input_lines]))
 
 
 def solve_pt_2(input_path):
-    input_lines = read_file(input_path)
+    input_lines = read_file_with_strip(input_path)
     for x in input_lines:
         get_pt2_rd_score(x)
     print(sum([get_pt2_rd_score(x) for x in input_lines]))
