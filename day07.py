@@ -110,6 +110,7 @@ def solve_pt_2(input_path):
     current_best = file_system.home
     for single_dir in file_system.full_dir_map.keys():
         this_size = file_system.full_dir_map[single_dir].get_size()
+        # print("dir:", single_dir, ":", this_size)
         if this_size > target_size:
             if this_size < current_best.get_size():
                 current_best = file_system.full_dir_map[single_dir]
