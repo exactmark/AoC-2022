@@ -30,7 +30,7 @@ class Board:
         direction = line.split(" ")[0]
         dist = int(line.split(" ")[1])
         for x in range(dist):
-            print("new move")
+            # print("new move")
             if direction == "U":
                 self.headCoord[1] = self.headCoord[1] + 1
             if direction == "D":
@@ -39,9 +39,9 @@ class Board:
                 self.headCoord[0] = self.headCoord[0] + 1
             if direction == "L":
                 self.headCoord[0] = self.headCoord[0] - 1
-            print("head:", self.headCoord[0], ",", self.headCoord[1])
+            # print("head:", self.headCoord[0], ",", self.headCoord[1])
             self.maybe_move_tail()
-            print("tail:", self.tailCoord[0], ",", self.tailCoord[1])
+            # print("tail:", self.tailCoord[0], ",", self.tailCoord[1])
 
 
 def solve_pt_1(input_path):
@@ -54,9 +54,23 @@ def solve_pt_1(input_path):
 
 def solve_pt_2(input_path):
     lines = read_file_with_strip(input_path)
+    boards = []
+    for x in range(9):
+        boards.append(Board())
+    for line in lines:
+        num_moves = int(line.split(" ")[1])
+        new_move = line[:2] + "1"
+        for x in range(num_moves):
+            boards[0].process_move(new_move)
+            for y in range(1, len(boards)):
+                boards[y].headCoord = boards[y - 1].tailCoord
+                boards[y].maybe_move_tail()
+        print(boards[len(boards)-1].tailCoord)
+
+    print(sum(boards[len(boards) - 1].tailVisited.values()))
 
 
 day = "09"
 sample_path = "inputDir/" + day + "_Sample.txt"
 data_path = "inputDir/" + day + "_Data.txt"
-solve_pt_1(data_path)
+solve_pt_2(data_path)
