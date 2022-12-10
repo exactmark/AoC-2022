@@ -5,7 +5,7 @@ class CPU:
     def __init__(self):
         self.current_voltage = 1
         # adding two steps to match cycles from problem
-        self.history = [1,1]
+        self.history = [1, 1]
         self.command_history = []
 
     def process_command(self, line):
@@ -19,15 +19,16 @@ class CPU:
             self.history.append(self.history[-1])
             self.history.append(self.history[-1] + magnitude)
 
-    def get_magnitude(self,time):
-        return self.history[time]*time
+    def get_magnitude(self, time):
+        return self.history[time] * time
+
 
 def solve_pt_1(input_path):
     lines = read_file_with_strip(input_path)
     cpu = CPU()
     for line in lines:
         cpu.process_command(line)
-    time_list = [20,60,100,140,180,220]
+    time_list = [20, 60, 100, 140, 180, 220]
     print(sum([cpu.get_magnitude(x) for x in time_list]))
     for x in time_list:
         print(cpu.history[x])
@@ -39,17 +40,17 @@ def solve_pt_2(input_path):
     for line in lines:
         cpu.process_command(line)
 
-    for y in range(0,6):
-        current_line=""
-        for x in range(0,40):
+    for y in range(0, 6):
+        current_line = ""
+        for x in range(0, 40):
             # add +1 to match history/cycle
-            current_voltage = cpu.history[y*40+x+1]
-            volt_range = range(current_voltage-1,current_voltage+2)
+            current_voltage = cpu.history[y * 40 + x + 1]
+            volt_range = range(current_voltage - 1, current_voltage + 2)
             # print(y,":",volt_range)
             if x in volt_range:
-                current_line+="#"
+                current_line += "##"
             else:
-                current_line+="."
+                current_line += "  "
         print(current_line)
 
 
