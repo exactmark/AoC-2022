@@ -15,7 +15,8 @@ class Monkey:
         # Operation: new = old * 19
         self.operation = self.make_operation(monkey_lines[2])
         # Test: divisible by 23
-        self.monkey_test = lambda num: num % int(monkey_lines[3].split(" by ")[1]) == 0
+        self.monkey_test_prime = int(monkey_lines[3].split(" by ")[1])
+        self.monkey_test = lambda num: num % self.monkey_test_prime == 0
         # If true: throw to monkey 2
         # If false: throw to monkey 3
         self.test_true_target = int(monkey_lines[4].split("monkey ")[1])
@@ -64,13 +65,15 @@ def solve_pt_1(input_path):
 def solve_pt_2(input_path):
     lines = read_file_with_strip(input_path)
     monkeys = make_monkey_list(lines)
-    for round_number in range(20):
+    globalMod = 1
+    for monkey in monkeys:
+        globalMod *= monkey.monkey_test_prime
+    for round_number in range(10000):
         print(round_number)
         for monkey in monkeys:
             for single_item in monkey.item_list:
                 monkey.items_inspected += 1
-                new_val = monkey.operation(single_item)
-                # new_val = floor( new_val/3)
+                new_val = monkey.operation(single_item) % globalMod
                 if monkey.monkey_test(new_val):
                     monkeys[monkey.test_true_target].item_list.append(new_val)
                 else:
@@ -87,4 +90,4 @@ def solve_pt_2(input_path):
 day = "11"
 sample_path = "inputDir/" + day + "_Sample.txt"
 data_path = "inputDir/" + day + "_Data.txt"
-solve_pt_2(sample_path)
+solve_pt_2(data_path)
