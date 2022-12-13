@@ -24,13 +24,16 @@ class Board:
         self.field = []
         self.start_cell = None
         self.end_cell = None
+        self.all_cells = []
 
     def load_board(self, lines):
         self.field = []
         for y in range(0, len(lines)):
             this_row = []
             for x in range(0, len(lines[y])):
-                this_row.append(Cell(x, y, lines[y][x]))
+                new_cell = Cell(x, y, lines[y][x])
+                this_row.append(new_cell)
+                self.all_cells.append(new_cell)
             self.field.append(this_row)
         for y in range(len(self.field)):
             for x in range(len(self.field[y])):
@@ -58,6 +61,7 @@ def find_solution_pt1(board):
     visited_cells.append(board.start_cell)
     solution_found = False
     while not solution_found:
+        previous_visited_count = len(visited_cells)
         next_solution_list = []
         for single_solution in solutions:
             for neighbor in single_solution[-1].neighbors:
@@ -68,6 +72,8 @@ def find_solution_pt1(board):
                     next_solution_list.append(new_solution)
                     if neighbor.is_end:
                         return new_solution
+        if len(visited_cells) == previous_visited_count:
+            return None
         solutions = next_solution_list
         # print(solutions)
 
@@ -83,9 +89,26 @@ def solve_pt_1(input_path):
 
 def solve_pt_2(input_path):
     lines = read_file_with_strip(input_path)
+    board = Board()
+    board.load_board(lines)
+    print("loaded")
+    a_list = []
+    for single_cell in board.all_cells:
+        if single_cell.height == 0:
+            a_list.append(single_cell)
+    # previous best solution + 1
+    best_solution = 463
+    for x in range(len(a_list)):
+        board.start_cell = a_list[x]
+        solution = find_solution_pt1(board)
+        print(x, " of ", len(a_list))
+        if solution:
+            if len(solution) < best_solution:
+                best_solution = len(solution)
+    print(best_solution - 1)
 
 
 day = "12"
 sample_path = "inputDir/" + day + "_Sample.txt"
 data_path = "inputDir/" + day + "_Data.txt"
-solve_pt_1(data_path)
+solve_pt_2(data_path)
